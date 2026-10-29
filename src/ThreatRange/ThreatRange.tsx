@@ -6,16 +6,16 @@ const ThreatRange = ({
   handleThreatRangeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) => {
   return (
-    <div>
-      And a threat range of{" "}
+    <label className="inputRow">
+      <span className="inputLabel">And a threat range of</span>
       <input
         type="number"
         value={threatRange}
         max={20}
         onChange={handleThreatRangeChange}
-      />{" "}
-      ({threatRange}-20)
-    </div>
+      />
+      <span className="inputSuffix">({threatRange}-20)</span>
+    </label>
   );
 };
 

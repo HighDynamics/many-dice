@@ -6,10 +6,11 @@ const Target = ({
   handleTargetChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) => {
   return (
-    <div>
-      With a target of{" "}
+    <label className="inputRow">
+      <span className="inputLabel">With a target of</span>
       <input type="number" value={target} onChange={handleTargetChange} />
-    </div>
+      <span className="inputSuffix" />
+    </label>
   );
 };
 

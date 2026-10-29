@@ -7,11 +7,30 @@ body {
 }
 
 .inputsContainer {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: auto 8rem auto;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin-bottom: 1rem;
 }
+
+.inputRow {
+  display: contents;
+}
+
+.inputLabel {
+  text-align: right;
+}
+
+.inputSuffix {
+  text-align: left;
+}
+
 input {
-  width: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.25rem 0.5rem;
 }
 
 .resultContainer {
