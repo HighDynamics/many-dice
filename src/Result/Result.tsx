@@ -4,7 +4,7 @@ import AllRollResultsDisplay from "../AllRollResultsDisplay/AllRollResultsDispla
 import ConfirmationRollsDisplay from "../ConfirmationRollsDisplay/ConfirmationRollsDisplay";
 import CopyRollsButton from "../CopyRollsButton/CopyRollsButton";
 import RollColumns from "../RollColumns/RollColumns";
-import { formatRoll, Roll } from "../rolls";
+import { CRIT_THREAT, formatRoll, NAT_20, Roll } from "../rolls";
 
 const Result = ({
   result,
@@ -80,7 +80,9 @@ const Result = ({
     <>
       <h2>Result:</h2>
       <CopyRollsButton text={rollsText} />
-      <RollColumns>{resultDisplay}</RollColumns>
+      <RollColumns rolls={result} statusWidth={CRIT_THREAT.length}>
+        {resultDisplay}
+      </RollColumns>
       <div>
         <em>Successes:</em> {successes}
         <br />
@@ -97,7 +99,9 @@ const Result = ({
             text={confirmationRollsText}
             label="Copy confirmation rolls"
           />
-          <RollColumns>{confirmationResults}</RollColumns>
+          <RollColumns rolls={confirmationRolls} statusWidth={NAT_20.length}>
+            {confirmationResults}
+          </RollColumns>
           {confirmationRolls.length > 0 && (
             <div>
               <em>Confirmations:</em> {confirmations}

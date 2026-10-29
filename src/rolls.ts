@@ -55,8 +55,8 @@ export const formatRoll = (
   const status = getRollStatus(roll.natural, threatRange);
   return [
     `${position}. ${roll.total}`,
-    status,
     roll.paired === undefined ? "" : `| ${roll.paired}`,
+    status,
   ]
     .filter(Boolean)
     .join(" ");

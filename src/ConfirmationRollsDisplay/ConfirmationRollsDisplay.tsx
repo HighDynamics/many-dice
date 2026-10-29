@@ -1,3 +1,4 @@
+import RollRow from "../RollRow/RollRow";
 import { getRollStatus, Roll } from "../rolls";
 
 const ConfirmationRollsDisplay = ({
@@ -26,16 +27,15 @@ const ConfirmationRollsDisplay = ({
     }
     return className;
   };
-  const status = getRollStatus(roll.natural);
 
   return (
-    <div>
-      <span className="rollPosition">{position}.</span>{" "}
-      <span className={getClassName()}>
-        {roll.total}
-        {status && ` ${status}`}
-      </span>
-    </div>
+    <RollRow
+      position={position}
+      total={roll.total}
+      paired={roll.paired}
+      status={getRollStatus(roll.natural)}
+      className={getClassName()}
+    />
   );
 };
 

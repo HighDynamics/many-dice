@@ -45,21 +45,39 @@ input {
   width: 80%;
   font-family: monospace;
   margin: 1rem auto;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, var(--column-width));
   justify-content: center;
   gap: 1rem 2rem;
 }
 
 .rollColumn {
-  min-width: 4.5rem;
-  text-align: left;
+  display: grid;
+  grid-template-columns: var(--column-tracks);
+  align-content: start;
+}
+
+.rollRow {
+  display: contents;
+}
+
+.rollPosition,
+.rollTotal,
+.rollPaired {
+  text-align: right;
 }
 
 .rollPosition {
-  display: inline-block;
-  min-width: 3ch;
-  text-align: right;
+  padding-right: 1ch;
+}
+
+.rollPipe {
+  text-align: center;
+}
+
+.rollStatus {
+  padding-left: 1ch;
+  text-align: left;
 }
 
 button + button {
