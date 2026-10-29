@@ -27,6 +27,14 @@ body {
   text-align: left;
 }
 
+.inputRowFull {
+  grid-column: 1 / -1;
+}
+
+.inputSuffix button {
+  margin-left: 0.5rem;
+}
+
 input {
   width: 100%;
   box-sizing: border-box;

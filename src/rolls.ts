@@ -12,6 +12,11 @@ export interface DiceGroup {
 
 export const DIE_SIZES = [4, 6, 8, 10, 12, 20, 100];
 
+export const MAX_DICE_PER_GROUP = 100;
+
+export const clampDiceCount = (count: number): number =>
+  Math.min(MAX_DICE_PER_GROUP, Math.max(0, Math.floor(count) || 0));
+
 export const rollDie = (sides: number): number =>
   Math.floor(Math.random() * sides) + 1;
 
