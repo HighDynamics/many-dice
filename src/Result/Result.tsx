@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import AllRollResultsDisplay from "../AllRollResultsDisplay/AllRollResultsDisplay";
 import ConfirmationRollsDisplay from "../ConfirmationRollsDisplay/ConfirmationRollsDisplay";
+import CopyRollsButton from "../CopyRollsButton/CopyRollsButton";
+import RollColumns from "../RollColumns/RollColumns";
 
 const Result = ({
   result,
@@ -47,8 +49,10 @@ const Result = ({
     }
   });
 
-  const resultDisplay = result.map((n) => (
+  const resultDisplay = result.map((n, i) => (
     <AllRollResultsDisplay
+      key={i}
+      position={i + 1}
       rawRoll={n - modifier}
       totalRoll={n}
       threatRange={threatRange}
@@ -56,8 +60,10 @@ const Result = ({
     />
   ));
 
-  const confirmationResults = confirmationRolls.map((n) => (
+  const confirmationResults = confirmationRolls.map((n, i) => (
     <ConfirmationRollsDisplay
+      key={i}
+      position={i + 1}
       rawRoll={n - modifier}
       totalRoll={n}
       target={target}
@@ -70,7 +76,8 @@ const Result = ({
   return (
     <>
       <h2>Result:</h2>
-      <div className="resultContainer">{resultDisplay}</div>
+      <CopyRollsButton rolls={result} />
+      <RollColumns>{resultDisplay}</RollColumns>
       <div>
         <em>Successes:</em> {successes}
         <br />
@@ -83,7 +90,11 @@ const Result = ({
       {result.length > 0 && (
         <div>
           <button onClick={handleClick}>Roll Threat Confirmations</button>
-          <div className="resultContainer">{confirmationResults}</div>
+          <CopyRollsButton
+            rolls={confirmationRolls}
+            label="Copy confirmation rolls"
+          />
+          <RollColumns>{confirmationResults}</RollColumns>
           {confirmationRolls.length > 0 && (
             <div>
               <em>Confirmations:</em> {confirmations}

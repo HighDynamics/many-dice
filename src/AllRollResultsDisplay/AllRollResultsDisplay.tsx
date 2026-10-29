@@ -1,9 +1,11 @@
 const AllRollResultsDisplay = ({
+  position,
   rawRoll,
   totalRoll,
   threatRange,
   target,
 }: {
+  position: number;
   rawRoll: number;
   totalRoll: number;
   threatRange: number;
@@ -29,7 +31,8 @@ const AllRollResultsDisplay = ({
   };
   return (
     <div>
-      | <span className={getClassName()}>{totalRoll}</span> |
+      <span className="rollPosition">{position}.</span>{" "}
+      <span className={getClassName()}>{totalRoll}</span>
     </div>
   );
 };

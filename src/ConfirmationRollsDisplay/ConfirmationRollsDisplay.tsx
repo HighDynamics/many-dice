@@ -1,9 +1,11 @@
 const ConfirmationRollsDisplay = ({
+  position,
   totalRoll,
   rawRoll,
   target,
   threatRange,
 }: {
+  position: number;
   totalRoll: number;
   rawRoll: number;
   target: number;
@@ -27,9 +29,8 @@ const ConfirmationRollsDisplay = ({
 
   return (
     <div>
-      <div>
-        | <span className={getClassName()}>{totalRoll}</span> |
-      </div>
+      <span className="rollPosition">{position}.</span>{" "}
+      <span className={getClassName()}>{totalRoll}</span>
     </div>
   );
 };

@@ -17,9 +17,26 @@ input {
 .resultContainer {
   width: 80%;
   font-family: monospace;
-  margin: auto;
+  margin: 1rem auto;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem 2rem;
+}
+
+.rollColumn {
+  min-width: 4.5rem;
+  text-align: left;
+}
+
+.rollPosition {
+  display: inline-block;
+  min-width: 3ch;
+  text-align: right;
+}
+
+button + button {
+  margin-left: 0.5rem;
 }
 
 .threat {
