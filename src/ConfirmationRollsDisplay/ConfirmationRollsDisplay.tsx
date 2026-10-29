@@ -1,36 +1,40 @@
+import { getRollStatus, Roll } from "../rolls";
+
 const ConfirmationRollsDisplay = ({
   position,
-  totalRoll,
-  rawRoll,
+  roll,
   target,
   threatRange,
 }: {
   position: number;
-  totalRoll: number;
-  rawRoll: number;
+  roll: Roll;
   target: number;
   threatRange: number;
 }) => {
   const getClassName = (): string => {
     let className = "";
     switch (true) {
-      case rawRoll >= threatRange:
+      case roll.natural >= threatRange:
         className = "threat";
         break;
-      case rawRoll === 1 || totalRoll < target:
+      case roll.natural === 1 || roll.total < target:
         className = "criticalFailure";
         break;
-      case totalRoll >= target:
+      case roll.total >= target:
         className = "success";
         break;
     }
     return className;
   };
+  const status = getRollStatus(roll.natural);
 
   return (
     <div>
       <span className="rollPosition">{position}.</span>{" "}
-      <span className={getClassName()}>{totalRoll}</span>
+      <span className={getClassName()}>
+        {roll.total}
+        {status && ` ${status}`}
+      </span>
     </div>
   );
 };

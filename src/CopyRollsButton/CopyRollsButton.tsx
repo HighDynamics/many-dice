@@ -1,26 +1,42 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export const formatRolls = (rolls: number[]): string =>
-  rolls.map((roll, i) => `${i + 1}. ${roll}`).join("\n");
+const RESULT_LABELS = { copied: "Copied!", failed: "Copy failed" };
 
 const CopyRollsButton = ({
-  rolls,
+  text,
   label = "Copy rolls",
 }: {
-  rolls: number[];
+  text: string;
   label?: string;
 }) => {
-  const [copied, setCopied] = useState<boolean>(false);
+  const [result, setResult] = useState<"copied" | "failed" | null>(null);
+  const timer = useRef<number>();
+  const mounted = useRef<boolean>(true);
+
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+      window.clearTimeout(timer.current);
+    };
+  }, []);
 
   const handleClick = async () => {
-    await navigator.clipboard.writeText(formatRolls(rolls));
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
+    window.clearTimeout(timer.current);
+    let outcome: "copied" | "failed" = "copied";
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      outcome = "failed";
+    }
+    if (!mounted.current) return;
+    setResult(outcome);
+    timer.current = window.setTimeout(() => setResult(null), 1500);
   };
 
   return (
-    <button onClick={handleClick} disabled={rolls.length === 0}>
-      {copied ? "Copied!" : label}
+    <button onClick={handleClick} disabled={text === ""}>
+      {result ? RESULT_LABELS[result] : label}
     </button>
   );
 };

@@ -5,32 +5,35 @@ import Modifier from "./Modifier/Modifier";
 import Target from "./Target/Target";
 import ThreatRange from "./ThreatRange/ThreatRange";
 import Result from "./Result/Result";
+import { clampThreatRange, Roll, rollDie } from "./rolls";
 
 const App = (): ReactChild => {
   const [numOfDice, setNumOfDice] = useState<number>(1);
   const [modifier, setModifier] = useState<number>(0);
   const [target, setTarget] = useState<number>(0);
-  const [threatRange, setThreatRange] = useState<number>(20);
-  const [result, setResult] = useState<number[]>([]);
+  const [threatRangeInput, setThreatRangeInput] = useState<number>(20);
+  const [result, setResult] = useState<Roll[]>([]);
+
+  // The input keeps what was typed; rolls use the clamped range.
+  const threatRange = clampThreatRange(threatRangeInput);
 
   const handleChange =
     (fn: (e: number) => void) => (e: React.ChangeEvent<HTMLInputElement>) =>
       fn(Number(e.currentTarget.value));
 
-  const rollDice = (numOfDice: number): number[] => {
+  const rollDice = (numOfDice: number): Roll[] => {
     let i = 0;
-    const resultArray: number[] = [];
+    const resultArray: Roll[] = [];
     while (i < numOfDice) {
-      resultArray.push(Math.floor(Math.random() * 20) + 1 + modifier);
+      const natural = rollDie(20);
+      resultArray.push({ natural, total: natural + modifier });
       i++;
     }
     return resultArray;
   };
 
-  const rollResult: number[] = rollDice(numOfDice);
-
   const handleClick = () => {
-    setResult(rollResult);
+    setResult(rollDice(numOfDice));
   };
 
   return (
@@ -46,8 +49,8 @@ const App = (): ReactChild => {
         />
         <Target target={target} handleTargetChange={handleChange(setTarget)} />
         <ThreatRange
-          threatRange={threatRange}
-          handleThreatRangeChange={handleChange(setThreatRange)}
+          threatRange={threatRangeInput}
+          handleThreatRangeChange={handleChange(setThreatRangeInput)}
         />
       </div>
       <button onClick={handleClick}>Roll</button>
@@ -55,8 +58,7 @@ const App = (): ReactChild => {
         result={result}
         target={target}
         threatRange={threatRange}
-        modifier={modifier}
-        rollDice={rollDice}
+        rollConfirmations={rollDice}
       />
     </div>
   );

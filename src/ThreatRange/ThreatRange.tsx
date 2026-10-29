@@ -1,3 +1,9 @@
+import {
+  clampThreatRange,
+  MAX_THREAT_RANGE,
+  MIN_THREAT_RANGE,
+} from "../rolls";
+
 const ThreatRange = ({
   threatRange,
   handleThreatRangeChange,
@@ -11,10 +17,13 @@ const ThreatRange = ({
       <input
         type="number"
         value={threatRange}
-        max={20}
+        min={MIN_THREAT_RANGE}
+        max={MAX_THREAT_RANGE}
         onChange={handleThreatRangeChange}
       />
-      <span className="inputSuffix">({threatRange}-20)</span>
+      <span className="inputSuffix">
+        ({clampThreatRange(threatRange)}-{MAX_THREAT_RANGE})
+      </span>
     </label>
   );
 };

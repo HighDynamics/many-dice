@@ -4,79 +4,82 @@ import AllRollResultsDisplay from "../AllRollResultsDisplay/AllRollResultsDispla
 import ConfirmationRollsDisplay from "../ConfirmationRollsDisplay/ConfirmationRollsDisplay";
 import CopyRollsButton from "../CopyRollsButton/CopyRollsButton";
 import RollColumns from "../RollColumns/RollColumns";
+import { formatRoll, Roll } from "../rolls";
 
 const Result = ({
   result,
   target,
   threatRange,
-  modifier,
-  rollDice,
+  rollConfirmations,
 }: {
-  result: number[];
+  result: Roll[];
   target: number;
   threatRange: number;
-  modifier: number;
-  rollDice: (n: number) => number[];
+  rollConfirmations: (n: number) => Roll[];
 }) => {
-  const [confirmationRolls, setConfirmationRolls] = useState<number[]>([]);
+  const [confirmationRolls, setConfirmationRolls] = useState<Roll[]>([]);
   let threats = 0;
   let criticalFailures = 0;
   let successes = 0;
   let failures = 0;
   let confirmations = 0;
 
-  result.forEach((n) => {
+  result.forEach((roll) => {
     switch (true) {
-      case n - modifier === 1:
+      case roll.natural === 1:
         criticalFailures += 1;
         break;
-      case n - modifier >= threatRange:
+      case roll.natural >= threatRange:
         threats += 1;
         break;
-      case n >= target:
+      case roll.total >= target:
         successes += 1;
         break;
-      case n < target:
+      case roll.total < target:
         failures += 1;
         break;
     }
   });
 
-  confirmationRolls.forEach((n) => {
+  confirmationRolls.forEach((roll) => {
     switch (true) {
-      case n >= target || n - modifier >= threatRange:
+      case roll.total >= target || roll.natural >= threatRange:
         confirmations += 1;
     }
   });
 
-  const resultDisplay = result.map((n, i) => (
+  const resultDisplay = result.map((roll, i) => (
     <AllRollResultsDisplay
       key={i}
       position={i + 1}
-      rawRoll={n - modifier}
-      totalRoll={n}
+      roll={roll}
       threatRange={threatRange}
       target={target}
     />
   ));
 
-  const confirmationResults = confirmationRolls.map((n, i) => (
+  const confirmationResults = confirmationRolls.map((roll, i) => (
     <ConfirmationRollsDisplay
       key={i}
       position={i + 1}
-      rawRoll={n - modifier}
-      totalRoll={n}
+      roll={roll}
       target={target}
       threatRange={threatRange}
     />
   ));
+  const rollsText = result
+    .map((roll, i) => formatRoll(roll, i + 1, threatRange))
+    .join("\n");
+  const confirmationRollsText = confirmationRolls
+    .map((roll, i) => formatRoll(roll, i + 1))
+    .join("\n");
   const handleClick = () => {
-    setConfirmationRolls(rollDice(threats));
+    setConfirmationRolls(rollConfirmations(threats));
   };
   return (
     <>
       <h2>Result:</h2>
-      <CopyRollsButton rolls={result} />
+      <CopyRollsButton text={rollsText} />
       <RollColumns>{resultDisplay}</RollColumns>
       <div>
         <em>Successes:</em> {successes}
@@ -91,7 +94,7 @@ const Result = ({
         <div>
           <button onClick={handleClick}>Roll Threat Confirmations</button>
           <CopyRollsButton
-            rolls={confirmationRolls}
+            text={confirmationRollsText}
             label="Copy confirmation rolls"
           />
           <RollColumns>{confirmationResults}</RollColumns>
