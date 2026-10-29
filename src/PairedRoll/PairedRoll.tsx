@@ -19,6 +19,7 @@ const PairedRoll = ({
 }) => {
   return (
     <>
+      <hr className="inputRowFull" />
       {groups.map((group, i) => (
         <div className="inputRow" key={group.id}>
           <span className="inputLabel">
@@ -52,20 +53,20 @@ const PairedRoll = ({
           </span>
         </div>
       ))}
-      <label className="inputRow">
-        <span className="inputLabel">
-          {groups.length === 0 ? "Paired roll of" : "plus"}
-        </span>
-        <input
-          type="number"
-          value={modifier}
-          onChange={handleModifierChange}
-        />
-        <span className="inputSuffix">flat modifier</span>
-      </label>
       <div className="inputRowFull">
         <button onClick={addGroup}>Add paired dice</button>
       </div>
+      {groups.length > 0 && (
+        <label className="inputRow">
+          <span className="inputLabel">plus</span>
+          <input
+            type="number"
+            value={modifier}
+            onChange={handleModifierChange}
+          />
+          <span className="inputSuffix">flat modifier</span>
+        </label>
+      )}
     </>
   );
 };

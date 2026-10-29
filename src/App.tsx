@@ -46,12 +46,15 @@ const App = (): ReactChild => {
     ]);
   };
 
-  const removeGroup = (id: number) =>
-    setPairedGroups(pairedGroups.filter((group) => group.id !== id));
+  const removeGroup = (id: number) => {
+    const remaining = pairedGroups.filter((group) => group.id !== id);
+    setPairedGroups(remaining);
+    if (remaining.length === 0) setPairedModifier(0);
+  };
 
-  // A paired roll exists once it has any dice or a modifier.
+  // A paired roll exists once it has any dice.
   const rollPaired = (): number | undefined => {
-    if (pairedGroups.length === 0 && pairedModifier === 0) return undefined;
+    if (pairedGroups.length === 0) return undefined;
     let total = pairedModifier;
     pairedGroups.forEach(({ count, sides }) => {
       for (let i = 0; i < count; i++) {
