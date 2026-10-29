@@ -1,24 +1,27 @@
+import RollRow from "../RollRow/RollRow";
+import { getRollStatus, Roll } from "../rolls";
+
 const ConfirmationRollsDisplay = ({
-  totalRoll,
-  rawRoll,
+  position,
+  roll,
   target,
   threatRange,
 }: {
-  totalRoll: number;
-  rawRoll: number;
+  position: number;
+  roll: Roll;
   target: number;
   threatRange: number;
 }) => {
   const getClassName = (): string => {
     let className = "";
     switch (true) {
-      case rawRoll >= threatRange:
+      case roll.natural >= threatRange:
         className = "threat";
         break;
-      case rawRoll === 1 || totalRoll < target:
+      case roll.natural === 1 || roll.total < target:
         className = "criticalFailure";
         break;
-      case totalRoll >= target:
+      case roll.total >= target:
         className = "success";
         break;
     }
@@ -26,11 +29,13 @@ const ConfirmationRollsDisplay = ({
   };
 
   return (
-    <div>
-      <div>
-        | <span className={getClassName()}>{totalRoll}</span> |
-      </div>
-    </div>
+    <RollRow
+      position={position}
+      total={roll.total}
+      paired={roll.paired}
+      status={getRollStatus(roll.natural)}
+      className={getClassName()}
+    />
   );
 };
 

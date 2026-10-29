@@ -1,39 +1,480 @@
-body {
-  background-color: bisque;
-}
 .App {
-  margin-top: 10%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-4) var(--space-6);
+}
+
+/* Header */
+
+.appHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding-bottom: var(--space-5);
+  color: var(--gold-text);
+}
+
+.appHeader h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+}
+
+.d20Mark {
+  width: 2.25rem;
+  height: 2.25rem;
+  filter: drop-shadow(0 0 6px var(--focus-glow));
+}
+
+/* Panels */
+
+.panel {
+  position: relative;
+  margin-bottom: var(--space-5);
+  padding: var(--space-5);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+/* A faint inner rule */
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border: 1px solid var(--rule);
+  border-radius: calc(var(--radius-lg) - 5px);
+  pointer-events: none;
+}
+
+.panelHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.panelHeader h2,
+.panelHeader h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: var(--space-3) 0;
+  color: var(--gold-text);
+}
+
+.divider svg {
+  width: 0.8rem;
+  height: 0.8rem;
+  fill: currentColor;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--control-border));
+}
+
+.divider::after {
+  transform: scaleX(-1);
+}
+
+/* Inputs */
+
+/* Equal side tracks keep the input column centred in the panel, whatever
+   the labels and suffixes hold. */
+.inputsContainer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(5rem, 8rem) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.inputsContainer .divider,
+.inputRowFull {
+  grid-column: 1 / -1;
+}
+
+.inputsContainer .divider {
+  width: min(100%, 26rem);
+  justify-self: center;
+}
+
+.inputRowFull {
+  justify-self: center;
+}
+
+.inputRow {
+  display: contents;
+}
+
+.inputLabel {
+  text-align: right;
+  font-weight: 500;
+}
+
+.inputSuffix {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--ink-muted);
+  text-align: left;
+}
+
+input,
+select {
+  box-sizing: border-box;
+  height: 2.5rem;
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  background: var(--field);
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-sm);
+  padding: 0 var(--space-3);
+}
+
+input {
+  width: 100%;
+}
+
+input:hover,
+select:hover {
+  border-color: var(--ink);
+}
+
+input:focus-visible,
+select:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+input:focus-visible,
+select:focus-visible {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 4px var(--focus-glow);
+}
+
+button:focus-visible {
+  box-shadow: 0 0 0 4px var(--focus-glow);
+}
+
+/* Buttons */
+
+button {
+  height: 2.5rem;
+  padding: 0 var(--space-4);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s, filter 0.15s;
+}
+
+button:hover:not(:disabled) {
+  background: var(--surface-2);
+  border-color: var(--ink);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+button:disabled {
+  color: var(--ink-muted);
+  border-style: dashed;
+  border-color: var(--border);
+  cursor: not-allowed;
+}
+
+.rollAction {
+  display: flex;
+  justify-content: center;
+}
+
+.rollButton,
+.rollButton:hover:not(:disabled) {
+  min-width: 10rem;
+  padding: 0 var(--space-6);
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  color: var(--on-gold);
+  background: linear-gradient(to bottom, var(--gold-hi), var(--gold-lo));
+  border-color: var(--gold-lo);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.rollButton:hover:not(:disabled) {
+  filter: brightness(1.07);
+}
+
+.ghostButton {
+  height: 2.25rem;
+  padding: 0 var(--space-3);
+  color: var(--crimson);
+  border-color: transparent;
+}
+
+/* Results */
+
+.resultContainer {
+  --column-pad: 0.75rem;
+  margin: var(--space-4) 0;
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    calc(var(--column-width) + 2 * var(--column-pad))
+  );
+  justify-content: center;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.75;
+}
+
+.rollColumn {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: var(--column-tracks);
+  align-content: start;
+  padding: var(--space-2) var(--column-pad);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.rollRow {
+  display: contents;
+}
+
+.rollPosition,
+.rollTotal,
+.rollPaired {
+  text-align: right;
+}
+
+.rollPosition,
+.rollPipe {
+  color: var(--ink-muted);
+}
+
+.rollPosition {
+  padding-right: 1ch;
+}
+
+.rollTotal {
+  font-weight: 700;
+}
+
+.rollPipe {
   text-align: center;
 }
 
-.inputsContainer {
-  display: flex;
-  flex-direction: column;
-}
-input {
-  width: 2rem;
+.rollStatus {
+  padding-left: 1ch;
+  text-align: left;
 }
 
-.resultContainer {
-  width: 80%;
-  font-family: monospace;
-  margin: auto;
-  display: flex;
-  flex-wrap: wrap;
+.statusNat20 {
+  color: var(--gold-text);
+  font-weight: 700;
+}
+
+.statusCrit {
+  color: var(--arcane);
+  font-weight: 700;
+}
+
+.statusNat1 {
+  color: var(--crimson);
+  font-weight: 700;
 }
 
 .threat {
-  color: green;
+  color: var(--arcane);
 }
 
 .success {
-  color: black;
+  color: var(--ink);
 }
 
 .failure {
-  color: gray;
+  color: var(--ink-muted);
 }
 
 .criticalFailure {
-  color: red;
+  color: var(--crimson);
+}
+
+.tallies {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+  gap: var(--space-3);
+  margin: var(--space-4) 0;
+}
+
+.tallies.single {
+  grid-template-columns: minmax(7rem, 12rem);
+  justify-content: center;
+}
+
+.tally {
+  padding: var(--space-3);
+  text-align: center;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.tallyLabel {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.tallyValue {
+  display: block;
+  font-size: 1.75rem;
+  font-weight: 600;
+  line-height: 1.3;
+  font-variant-numeric: tabular-nums;
+}
+
+.tallyThreat {
+  color: var(--arcane);
+}
+
+.tallyCrit {
+  color: var(--crimson);
+}
+
+@media (max-width: 560px) {
+  .App {
+    padding: var(--space-4) var(--space-3) var(--space-5);
+  }
+
+  .appHeader h1 {
+    font-size: 1.5rem;
+  }
+
+  .panel {
+    padding: var(--space-4);
+  }
+
+  /* Taps need 44px */
+  input,
+  select,
+  button {
+    height: 2.75rem;
+  }
+
+  .inputsContainer {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+
+  /* Label (and its hint) above a full-width field */
+  .inputRow {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-2) var(--space-3);
+  }
+
+  .inputLabel {
+    grid-column: 1;
+    grid-row: 1;
+    text-align: left;
+  }
+
+  .inputRow > .inputSuffix {
+    grid-column: 2;
+    grid-row: 1;
+    font-size: 0.9rem;
+  }
+
+  .inputRow > input {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  /* Each paired dice group is its own card: label and Remove on top, then
+     the count and the die size side by side */
+  .pairedGroup {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    padding: var(--space-3);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .pairedGroup > .pairedControls {
+    display: contents;
+  }
+
+  .pairedGroup .ghostButton {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+    height: 2.75rem;
+    padding: 0 var(--space-3);
+  }
+
+  .pairedGroup > input {
+    grid-column: 1;
+  }
+
+  .pairedGroup select {
+    grid-column: 2;
+    grid-row: 2;
+    width: 100%;
+  }
+
+  .inputRowFull {
+    justify-self: stretch;
+  }
+
+  .inputRowFull button,
+  .rollButton {
+    width: 100%;
+  }
+
+  .rollAction {
+    display: block;
+  }
 }

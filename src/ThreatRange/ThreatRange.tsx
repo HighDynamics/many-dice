@@ -1,3 +1,9 @@
+import {
+  clampThreatRange,
+  MAX_THREAT_RANGE,
+  MIN_THREAT_RANGE,
+} from "../rolls";
+
 const ThreatRange = ({
   threatRange,
   handleThreatRangeChange,
@@ -6,16 +12,20 @@ const ThreatRange = ({
   handleThreatRangeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) => {
   return (
-    <div>
-      And a threat range of{" "}
+    <label className="inputRow">
+      <span className="inputLabel">And a threat range of</span>
       <input
         type="number"
+        inputMode="numeric"
         value={threatRange}
-        max={20}
+        min={MIN_THREAT_RANGE}
+        max={MAX_THREAT_RANGE}
         onChange={handleThreatRangeChange}
-      />{" "}
-      ({threatRange}-20)
-    </div>
+      />
+      <span className="inputSuffix">
+        ({clampThreatRange(threatRange)}-{MAX_THREAT_RANGE})
+      </span>
+    </label>
   );
 };
 

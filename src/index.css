@@ -1,13 +1,87 @@
+:root {
+  color-scheme: light dark;
+
+  --font-display: "Cinzel", "Cormorant SC", Georgia, serif;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas,
+    monospace;
+
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 16px;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+
+  /* Lavender parchment and plum ink */
+  --bg: #f4eff8;
+  --bg-glow: rgba(124, 77, 214, 0.14);
+  --surface: #faf7fd;
+  --surface-2: #eee7f6;
+  --field: #fffdff;
+  --ink: #2a1a3d;
+  --ink-muted: #5d4d75;
+  --border: #d8cde8;
+  --control-border: #7d6c99;
+  --rule: rgba(122, 86, 0, 0.24);
+  --shadow: 0 1px 2px rgba(42, 26, 61, 0.1), 0 8px 24px rgba(42, 26, 61, 0.08);
+
+  /* Gold and arcane violet */
+  --gold-hi: #dcbb62;
+  --gold-lo: #c09a40;
+  --on-gold: #241a08;
+  --gold-text: #7a5600;
+  --arcane: #6a2bd6;
+  --crimson: #a3182b;
+  --focus: #6a2bd6;
+  --focus-glow: rgba(106, 43, 214, 0.22);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #120d1f;
+    --bg-glow: rgba(139, 92, 246, 0.2);
+    --surface: #1c1530;
+    --surface-2: #271d42;
+    --field: #150f27;
+    --ink: #f3edfb;
+    --ink-muted: #b6aec6;
+    --border: #3f3166;
+    --control-border: #8a7cb8;
+    --rule: rgba(236, 202, 112, 0.22);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.45), 0 8px 24px rgba(0, 0, 0, 0.4);
+
+    --gold-hi: #f0cc6e;
+    --gold-lo: #d9ac45;
+    --on-gold: #1a1208;
+    --gold-text: #ecca70;
+    --arcane: #b98cff;
+    --crimson: #ff8f9b;
+    --focus: #c4a6ff;
+    --focus-glow: rgba(185, 140, 255, 0.3);
+  }
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  color: var(--ink);
+  background: radial-gradient(
+      ellipse at top,
+      var(--bg-glow),
+      transparent 60%
+    )
+    no-repeat var(--bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: var(--font-mono);
 }

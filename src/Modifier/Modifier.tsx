@@ -6,11 +6,11 @@ const Modifier = ({
   handleModifierChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) => {
   return (
-    <div>
-      With a{" "}
-      <input type="number" value={modifier} onChange={handleModifierChange} />{" "}
-      modifier
-    </div>
+    <label className="inputRow">
+      <span className="inputLabel">With a</span>
+      <input type="number" value={modifier} onChange={handleModifierChange} />
+      <span className="inputSuffix">modifier</span>
+    </label>
   );
 };
 
