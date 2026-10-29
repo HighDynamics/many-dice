@@ -3,6 +3,7 @@ import { useState } from "react";
 import AllRollResultsDisplay from "../AllRollResultsDisplay/AllRollResultsDisplay";
 import ConfirmationRollsDisplay from "../ConfirmationRollsDisplay/ConfirmationRollsDisplay";
 import CopyRollsButton from "../CopyRollsButton/CopyRollsButton";
+import Divider from "../Divider/Divider";
 import RollColumns from "../RollColumns/RollColumns";
 import { CRIT_THREAT, formatRoll, NAT_20, Roll } from "../rolls";
 
@@ -78,39 +79,67 @@ const Result = ({
   };
   return (
     <>
-      <h2>Result:</h2>
-      <CopyRollsButton text={rollsText} />
+      <div className="panelHeader">
+        <h2>Result</h2>
+        <CopyRollsButton text={rollsText} />
+      </div>
       <RollColumns rolls={result} statusWidth={CRIT_THREAT.length}>
         {resultDisplay}
       </RollColumns>
-      <div>
-        <em>Successes:</em> {successes}
-        <br />
-        <em>Failures:</em> {failures}
-        <br />
-        <em>Critical Failures:</em> {criticalFailures}
-        <br />
-        <em>Threats:</em> {threats}
+      <div className="tallies">
+        <Tally label="Successes" value={successes} />
+        <Tally label="Failures" value={failures} />
+        <Tally
+          label="Critical Failures"
+          value={criticalFailures}
+          className="tallyCrit"
+        />
+        <Tally label="Threats" value={threats} className="tallyThreat" />
       </div>
       {result.length > 0 && (
-        <div>
-          <button onClick={handleClick}>Roll Threat Confirmations</button>
-          <CopyRollsButton
-            text={confirmationRollsText}
-            label="Copy confirmation rolls"
-          />
+        <>
+          <Divider />
+          <div className="panelHeader">
+            <h3>Threat confirmations</h3>
+            <div className="actions">
+              <button onClick={handleClick}>Roll Threat Confirmations</button>
+              <CopyRollsButton
+                text={confirmationRollsText}
+                label="Copy confirmation rolls"
+              />
+            </div>
+          </div>
           <RollColumns rolls={confirmationRolls} statusWidth={NAT_20.length}>
             {confirmationResults}
           </RollColumns>
           {confirmationRolls.length > 0 && (
-            <div>
-              <em>Confirmations:</em> {confirmations}
+            <div className="tallies single">
+              <Tally
+                label="Confirmations"
+                value={confirmations}
+                className="tallyThreat"
+              />
             </div>
           )}
-        </div>
+        </>
       )}
     </>
   );
 };
+
+const Tally = ({
+  label,
+  value,
+  className = "",
+}: {
+  label: string;
+  value: number;
+  className?: string;
+}) => (
+  <div className="tally">
+    <span className="tallyLabel">{label}</span>
+    <span className={`tallyValue ${className}`}>{value}</span>
+  </div>
+);
 
 export default Result;

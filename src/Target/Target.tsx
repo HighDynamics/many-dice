@@ -8,7 +8,12 @@ const Target = ({
   return (
     <label className="inputRow">
       <span className="inputLabel">With a target of</span>
-      <input type="number" value={target} onChange={handleTargetChange} />
+      <input
+        type="number"
+        inputMode="numeric"
+        value={target}
+        onChange={handleTargetChange}
+      />
       <span className="inputSuffix" />
     </label>
   );

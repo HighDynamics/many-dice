@@ -16,6 +16,7 @@ const ThreatRange = ({
       <span className="inputLabel">And a threat range of</span>
       <input
         type="number"
+        inputMode="numeric"
         value={threatRange}
         min={MIN_THREAT_RANGE}
         max={MAX_THREAT_RANGE}

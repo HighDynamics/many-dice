@@ -1,5 +1,6 @@
 import React, { ReactChild, useRef, useState } from "react";
 import "./App.css";
+import D20Mark from "./D20Mark/D20Mark";
 import DiceInput from "./DiceInput/DiceInput";
 import Modifier from "./Modifier/Modifier";
 import PairedRoll from "./PairedRoll/PairedRoll";
@@ -85,39 +86,54 @@ const App = (): ReactChild => {
 
   return (
     <div className="App">
-      <div className="inputsContainer">
-        <DiceInput
-          numOfDice={numOfDice}
-          handleDiceNumChange={handleChange(setNumOfDice)}
+      <header className="appHeader">
+        <D20Mark />
+        <h1>Many Dice</h1>
+      </header>
+      <section className="panel" aria-label="Roll setup">
+        <div className="inputsContainer">
+          <DiceInput
+            numOfDice={numOfDice}
+            handleDiceNumChange={handleChange(setNumOfDice)}
+          />
+          <Modifier
+            modifier={modifier}
+            handleModifierChange={handleChange(setModifier)}
+          />
+          <Target
+            target={target}
+            handleTargetChange={handleChange(setTarget)}
+          />
+          <ThreatRange
+            threatRange={threatRangeInput}
+            handleThreatRangeChange={handleChange(setThreatRangeInput)}
+          />
+          <PairedRoll
+            groups={pairedGroups}
+            modifier={pairedModifier}
+            handleCountChange={(id, count) =>
+              updateGroup(id, { count: clampDiceCount(count) })
+            }
+            handleSidesChange={(id, sides) => updateGroup(id, { sides })}
+            handleModifierChange={handleChange(setPairedModifier)}
+            addGroup={addGroup}
+            removeGroup={removeGroup}
+          />
+        </div>
+        <div className="rollAction">
+          <button className="rollButton" onClick={handleClick}>
+            Roll
+          </button>
+        </div>
+      </section>
+      <section className="panel" aria-label="Result">
+        <Result
+          result={result}
+          target={target}
+          threatRange={threatRange}
+          rollConfirmations={(n) => rollDice(n, false)}
         />
-        <Modifier
-          modifier={modifier}
-          handleModifierChange={handleChange(setModifier)}
-        />
-        <Target target={target} handleTargetChange={handleChange(setTarget)} />
-        <ThreatRange
-          threatRange={threatRangeInput}
-          handleThreatRangeChange={handleChange(setThreatRangeInput)}
-        />
-        <PairedRoll
-          groups={pairedGroups}
-          modifier={pairedModifier}
-          handleCountChange={(id, count) =>
-            updateGroup(id, { count: clampDiceCount(count) })
-          }
-          handleSidesChange={(id, sides) => updateGroup(id, { sides })}
-          handleModifierChange={handleChange(setPairedModifier)}
-          addGroup={addGroup}
-          removeGroup={removeGroup}
-        />
-      </div>
-      <button onClick={handleClick}>Roll</button>
-      <Result
-        result={result}
-        target={target}
-        threatRange={threatRange}
-        rollConfirmations={(n) => rollDice(n, false)}
-      />
+      </section>
     </div>
   );
 };

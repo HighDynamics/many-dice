@@ -1,3 +1,4 @@
+import Divider from "../Divider/Divider";
 import { DiceGroup, DIE_SIZES, MAX_DICE_PER_GROUP } from "../rolls";
 
 const PairedRoll = ({
@@ -19,14 +20,15 @@ const PairedRoll = ({
 }) => {
   return (
     <>
-      <hr className="inputRowFull" />
+      <Divider />
       {groups.map((group, i) => (
-        <div className="inputRow" key={group.id}>
+        <div className="inputRow pairedGroup" key={group.id}>
           <span className="inputLabel">
             {i === 0 ? "Paired roll of" : "plus"}
           </span>
           <input
             type="number"
+            inputMode="numeric"
             min={0}
             max={MAX_DICE_PER_GROUP}
             aria-label={`Paired dice ${i + 1} count`}
@@ -35,7 +37,7 @@ const PairedRoll = ({
               handleCountChange(group.id, Number(e.currentTarget.value))
             }
           />
-          <span className="inputSuffix">
+          <span className="inputSuffix pairedControls">
             <select
               aria-label={`Paired dice ${i + 1} size`}
               value={group.sides}
@@ -49,7 +51,12 @@ const PairedRoll = ({
                 </option>
               ))}
             </select>
-            <button onClick={() => removeGroup(group.id)}>Remove</button>
+            <button
+              className="ghostButton"
+              onClick={() => removeGroup(group.id)}
+            >
+              Remove
+            </button>
           </span>
         </div>
       ))}

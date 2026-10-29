@@ -1,3 +1,11 @@
+import { CRIT_THREAT, NAT_1, NAT_20 } from "../rolls";
+
+const STATUS_CLASSES: Record<string, string> = {
+  [NAT_1]: "statusNat1",
+  [NAT_20]: "statusNat20",
+  [CRIT_THREAT]: "statusCrit",
+};
+
 // Each part gets its own cell so the parts line up down a RollColumns column.
 const RollRow = ({
   position,
@@ -18,7 +26,9 @@ const RollRow = ({
       <span className={`rollTotal ${className}`}>{total}</span>
       <span className="rollPipe">{paired !== undefined && "|"}</span>
       <span className="rollPaired">{paired}</span>
-      <span className={`rollStatus ${className}`}>{status}</span>
+      <span className={`rollStatus ${STATUS_CLASSES[status] ?? ""}`}>
+        {status}
+      </span>
     </div>
   );
 };
