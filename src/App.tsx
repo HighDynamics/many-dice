@@ -1,4 +1,4 @@
-import React, { ReactChild, useRef, useState } from "react";
+import React, { ReactElement, useRef, useState } from "react";
 import "./App.css";
 import D20Mark from "./D20Mark/D20Mark";
 import DiceInput from "./DiceInput/DiceInput";
@@ -15,7 +15,7 @@ import {
   rollDie,
 } from "./rolls";
 
-const App = (): ReactChild => {
+const App = (): ReactElement => {
   const [numOfDice, setNumOfDice] = useState<number>(1);
   const [modifier, setModifier] = useState<number>(0);
   const [target, setTarget] = useState<number>(0);
