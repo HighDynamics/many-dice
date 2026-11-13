@@ -10,7 +10,7 @@ const CopyRollsButton = ({
   label?: string;
 }) => {
   const [result, setResult] = useState<"copied" | "failed" | null>(null);
-  const timer = useRef<number>();
+  const timer = useRef<number | undefined>(undefined);
   const mounted = useRef<boolean>(true);
 
   useEffect(() => {
